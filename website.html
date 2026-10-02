@@ -4,7 +4,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b1020">
 <title>CLASS 9C — Super Mario</title>
-
+<!-- Lenis Smooth Scroll CSS -->
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
+    
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
 
@@ -14,9 +16,15 @@
     box-sizing:border-box;
 }
 
-html{
-    scroll-behavior:smooth;
+/* LENIS OVERRIDES */
+html.lenis, html.lenis body {
+  height: auto;
 }
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+    
 
 body{
     font-family:'Poppins',sans-serif;
