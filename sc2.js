@@ -38,7 +38,7 @@ const students = [
         photo: "https://cdn.phototourl.com/member/2026-09-23-946eca70-caed-462c-8e60-988be48591e9.jpg",
         music: {
             name: "i want you back-jackson 5",
-            file: "quen.mp3"
+            file: "q.mp3"
         }
     },
 
