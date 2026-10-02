@@ -291,13 +291,13 @@ students.push(
 
     {
         id: 24,
-        name: "Juwita",
-        hobby: "sesuai mood",
-        bio: "cewek cakep sejagat raya pacar fadli",
-        photo: "https://cdn.phototourl.com/member/2026-09-27-ffcbf193-48bb-415f-a021-6a7d52d9b4a8.jpg",
+        name: "Anggi",
+        hobby: "mencari suasana baru",
+        bio: "learning, playing, growing🌱",
+        photo: "https://cdn.phototourl.com/member/2026-09-27-87e965ed-5495-4d6b-87b3-dd32e1a93dbd.jpg",
         music: {
-            name: "I think I like you better when you're gone by Renee Rapp",
-            file: "juwita.mp3"
+            name: "somebody pleasure",
+            file: "anggi.mp3"
         }
     }
 
@@ -729,25 +729,25 @@ students.push(
 
     {
         id: 26,
-        name: "Murid 26",
-        hobby: "Isi hobi",
-        bio: "Isi bio",
-        photo: "URL_FOTO_MURID_26",
+        name: "Juwita",
+        hobby: "sesuai mood",
+        bio: "cewek cakep sejagat raya pacar fadli",
+        photo: "https://cdn.phototourl.com/member/2026-09-27-ffcbf193-48bb-415f-a021-6a7d52d9b4a8.jpg",
         music: {
-            name: "Lagu Favorit",
-            file: "music/murid-26.mp3"
+            name: "hink I like you better when you're gone by Renee Rapp",
+            file: "juwita.mp3"
         }
     },
 
     {
         id: 27,
-        name: "Anggi",
-        hobby: "mencari suasana baru",
-        bio: "learning, playing, growing🌱",
-        photo: "https://cdn.phototourl.com/member/2026-09-27-87e965ed-5495-4d6b-87b3-dd32e1a93dbd.jpg",
+        name: "",
+        hobby: "",
+        bio: "",
+        photo: "",
         music: {
-            name: "somebody pleasure",
-            file: "anggi.mp3"
+            name: "",
+            file: ".mp3"
         }
     },
 
