@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+<title>CLASS 9C — Masuk</title>
+<link rel="prefetch" href="index.html">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#080d1c;
+    color:white;
+    overflow-x:hidden;
+    min-height:100vh;
+}
+
+/* ================= BACKGROUND ================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    background:
+        radial-gradient(circle at 10% 20%,rgba(255,70,70,.18),transparent 25%),
+        radial-gradient(circle at 90% 10%,rgba(40,130,255,.18),transparent 25%),
+        radial-gradient(circle at 50% 100%,rgba(255,210,50,.12),transparent 30%),
+        linear-gradient(135deg,#070b18,#101a35 50%,#080d1c);
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    opacity:.18;
+    background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:45px 45px;
+    pointer-events:none;
+}
+
+/* ================= FLOATING OBJECTS ================= */
+
+.floating{
+    position:fixed;
+    z-index:-1;
+    opacity:.15;
+    pointer-events:none;
+    animation:float 7s ease-in-out infinite;
+}
+
+.star{font-size:55px;color:#ffd83d}
+.cloud{font-size:65px}
+
+.float1{top:12%;left:5%}
+.float2{top:40%;right:5%;animation-delay:1s}
+.float3{bottom:22%;left:9%;animation-delay:2s}
+.float4{top:68%;right:14%;animation-delay:3s}
+.float5{top:8%;right:22%;animation-delay:1.5s}
+
+@keyframes float{
+    0%,100%{transform:translateY(0) rotate(0)}
+    50%{transform:translateY(-25px) rotate(8deg)}
+}
+
+/* ================= GROUND ================= */
+
+.ground{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:70px;
+    z-index:-1;
+    background:linear-gradient(#50b848 0 35%,#925c38 35% 100%);
+    border-top:8px solid #38a53b;
+}
+
+/* ================= LAYOUT ================= */
+
+.login-wrap{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:70px 16px 110px;
+}
+
+/* ================= QUESTION BLOCK ================= */
+
+.block-stage{
+    position:relative;
+    z-index:2;
+    width:62px;
+    height:62px;
+    margin-bottom:-31px;
+}
+
+.qblock{
+    position:relative;
+    z-index:2;
+    width:62px;
+    height:62px;
+    display:grid;
+    place-items:center;
+    background:#ffb52e;
+    border:4px solid #a85a14;
+    border-radius:10px;
+    font-family:'Fredoka',sans-serif;
+    font-weight:700;
+    font-size:34px;
+    color:#fff3c4;
+    text-shadow:0 3px 0 #a85a14;
+    box-shadow:
+        inset 0 -6px 0 rgba(168,90,20,.45),
+        0 12px 30px rgba(255,181,46,.28);
+    user-select:none;
+    will-change:transform;
+}
+
+/* paku di empat sudut blok */
+.qblock::before{
+    content:"";
+    position:absolute;
+    inset:5px;
+    pointer-events:none;
+    background:
+        radial-gradient(circle at 3px 3px,#a85a14 0 2px,transparent 2.5px),
+        radial-gradient(circle at calc(100% - 3px) 3px,#a85a14 0 2px,transparent 2.5px),
+        radial-gradient(circle at 3px calc(100% - 3px),#a85a14 0 2px,transparent 2.5px),
+        radial-gradient(circle at calc(100% - 3px) calc(100% - 3px),#a85a14 0 2px,transparent 2.5px);
+}
+
+/* blok setelah dipukul */
+.qblock.used{
+    background:#c98a3b;
+    color:#a85a14;
+    text-shadow:none;
+    box-shadow:inset 0 -6px 0 rgba(120,60,10,.4);
+    transition:background .15s,color .15s;
+}
+
+.coin-pop{
+    position:absolute;
+    z-index:1;
+    left:50%;
+    top:14px;
+    width:24px;
+    height:34px;
+    margin-left:-12px;
+    border:4px solid #ffd83d;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#fff6bf,#ffd83d 70%);
+    box-shadow:0 0 18px rgba(255,216,61,.7);
+    opacity:0;
+    pointer-events:none;
+    will-change:transform,opacity;
+}
+
+.spark{
+    position:fixed;
+    z-index:20;
+    pointer-events:none;
+    line-height:1;
+    will-change:transform,opacity;
+}
+
+/* ================= CARD ================= */
+
+.card{
+    position:relative;
+    z-index:1;
+    width:min(420px,100%);
+    padding:58px 28px 28px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:25px;
+    background:rgba(10,15,32,.78);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    box-shadow:0 15px 50px rgba(0,0,0,.35);
+    will-change:transform,opacity;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-family:'Fredoka',sans-serif;
+    font-weight:700;
+    font-size:19px;
+}
+
+.logo-mushroom{
+    width:35px;
+    height:30px;
+    background:#ef3340;
+    border-radius:18px 18px 10px 10px;
+    position:relative;
+}
+
+.logo-mushroom::before{
+    content:"";
+    position:absolute;
+    width:9px;
+    height:9px;
+    background:white;
+    border-radius:50%;
+    left:7px;
+    top:6px;
+    box-shadow:13px 3px white;
+}
+
+.card h1{
+    font-family:'Fredoka',sans-serif;
+    font-weight:600;
+    font-size:clamp(26px,7vw,32px);
+    line-height:1.15;
+    text-align:center;
+    margin-top:20px;
+    background:linear-gradient(180deg,#fff 15%,#ffd83d 60%,#ff7048 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.card .hint{
+    text-align:center;
+    color:#9ca9c5;
+    font-size:14px;
+    line-height:1.7;
+    margin-top:10px;
+}
+
+/* ================= FORM ================= */
+
+form{
+    margin-top:26px;
+    display:flex;
+    flex-direction:column;
+}
+
+.btn{
+    border:0;
+    padding:15px 20px;
+    border-radius:15px;
+    color:white;
+    font-family:inherit;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    transition:transform .3s,opacity .3s;
+    background:linear-gradient(135deg,#ef3340,#ff7048);
+    box-shadow:0 10px 30px rgba(239,51,64,.3);
+    will-change:transform;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.btn:focus-visible{
+    outline:3px solid #ffd83d;
+    outline-offset:3px;
+}
+
+.btn:disabled{
+    cursor:default;
+    transform:none;
+}
+
+.developer{
+    margin-top:22px;
+    text-align:center;
+    color:#71809c;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:.3px;
+    opacity:.8;
+}
+
+.developer strong{
+    color:#aebbd0;
+    font-weight:600;
+}
+
+/* ================= IRIS (transisi keluar) ================= */
+
+.iris{
+    position:fixed;
+    z-index:9999;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 0 200vmax #05080f;
+    pointer-events:none;
+}
+
+@media(prefers-reduced-motion:reduce){
+    .floating{
+        animation:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- FLOATING MARIO STYLE OBJECTS -->
+<div class="floating star float1">★</div>
+<div class="floating cloud float2">☁</div>
+<div class="floating star float3">★</div>
+<div class="floating cloud float4">☁</div>
+<div class="floating cloud float5">🍄</div>
+
+<div class="ground"></div>
+
+<main class="login-wrap">
+
+    <div class="block-stage" aria-hidden="true">
+        <span class="coin-pop" id="coin"></span>
+        <div class="qblock" id="qblock">?</div>
+    </div>
+
+    <div class="card" id="card">
+
+        <div class="logo">
+            <div class="logo-mushroom"></div>
+            CLASS 9C
+        </div>
+
+        <h1>Klik di bawah untuk melihat website kami</h1>
+
+        <p class="hint">
+            Tekan tombol di bawah untuk masuk.
+        </p>
+
+        <form id="loginForm">
+            <button type="submit" class="btn" id="submitBtn">
+                Lihat website
+            </button>
+        </form>
+
+        <div class="developer">
+            Create by <strong>Rivan</strong> • CLASS 9C
+        </div>
+
+    </div>
+
+</main>
+
+<script>
+(function () {
+    "use strict";
+
+    // Ganti kalau halaman utama kamu punya nama file lain
+    var TARGET_PAGE = "index.html";
+
+    var form      = document.getElementById("loginForm");
+    var submitBtn = document.getElementById("submitBtn");
+    var qblock    = document.getElementById("qblock");
+    var coin      = document.getElementById("coin");
+    var card      = document.getElementById("card");
+
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var running = false;
+
+    /* =========================
+       SOUND (dibuat langsung di browser, tanpa file mp3)
+       ========================= */
+
+    var AC = window.AudioContext || window.webkitAudioContext;
+    var ctx = null;
+
+    function audio() {
+        if (!AC) return null;
+        if (!ctx) ctx = new AC();
+        if (ctx.state === "suspended") ctx.resume();
+        return ctx;
+    }
+
+    function tone(freq, delay, dur, opts) {
+        var c = audio();
+        if (!c) return;
+        opts = opts || {};
+
+        var t = c.currentTime + delay;
+        var osc = c.createOscillator();
+        var gain = c.createGain();
+
+        osc.type = opts.type || "square";
+        osc.frequency.setValueAtTime(freq, t);
+        if (opts.slideTo) {
+            osc.frequency.exponentialRampToValueAtTime(opts.slideTo, t + dur);
+        }
+
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.exponentialRampToValueAtTime(opts.vol || 0.1, t + 0.006);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+
+        osc.connect(gain);
+        gain.connect(c.destination);
+        osc.start(t);
+        osc.stop(t + dur + 0.03);
+    }
+
+    // blok dipukul: "tok" pendek
+    function soundBump() {
+        tone(260, 0, 0.09, { type: "square", slideTo: 80, vol: 0.14 });
+        tone(95, 0, 0.14, { type: "triangle", slideTo: 45, vol: 0.32 });
+    }
+
+    // koin: dua nada naik yang renyah
+    function soundCoin(delay) {
+        tone(987.77, delay, 0.08, { type: "square", vol: 0.09 });
+        tone(1318.5, delay + 0.08, 0.5, { type: "square", vol: 0.09 });
+        tone(2637, delay + 0.08, 0.35, { type: "triangle", vol: 0.04 });
+    }
+
+    // power-up: tangga nada naik saat layar menutup
+    function soundPowerUp(delay) {
+        var notes = [523.25, 659.25, 783.99, 1046.5, 1318.5, 1568, 2093];
+        notes.forEach(function (f, i) {
+            tone(f, delay + i * 0.06, 0.12, { type: "square", vol: 0.07 });
+        });
+    }
+
+    /* =========================
+       ANIMASI
+       ========================= */
+
+    function center(el) {
+        var r = el.getBoundingClientRect();
+        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    }
+
+    function bounceBlock() {
+        qblock.animate(
+            [
+                { transform: "translateY(0) scale(1,1)" },
+                { transform: "translateY(-20px) scale(.94,1.08)", offset: 0.4, easing: "cubic-bezier(.3,0,.7,1)" },
+                { transform: "translateY(0) scale(1.08,.9)", offset: 0.75 },
+                { transform: "translateY(0) scale(1,1)" }
+            ],
+            { duration: 420, easing: "cubic-bezier(.2,.7,.3,1)" }
+        );
+        setTimeout(function () { qblock.classList.add("used"); }, 60);
+    }
+
+    function squishButton() {
+        submitBtn.animate(
+            [
+                { transform: "scale(1)" },
+                { transform: "scale(.93)", offset: 0.4 },
+                { transform: "scale(1.02)", offset: 0.75 },
+                { transform: "scale(1)" }
+            ],
+            { duration: 260, easing: "ease-out" }
+        );
+    }
+
+    function popCoin() {
+        coin.animate(
+            [
+                { opacity: 1, transform: "translateY(0) scaleX(1)" },
+                { opacity: 1, transform: "translateY(-48px) scaleX(.15)", offset: 0.2 },
+                { opacity: 1, transform: "translateY(-92px) scaleX(1)", offset: 0.4 },
+                { opacity: 1, transform: "translateY(-116px) scaleX(.15)", offset: 0.55, easing: "ease-in" },
+                { opacity: 1, transform: "translateY(-104px) scaleX(1)", offset: 0.7 },
+                { opacity: 0, transform: "translateY(-70px) scaleX(.6) scale(.7)" }
+            ],
+            { duration: 950, easing: "cubic-bezier(.25,.8,.4,1)", fill: "none" }
+        );
+    }
+
+    function sparkleBurst(origin) {
+        var colors = ["#ffd83d", "#ff5b4f", "#ffffff", "#4aa8ff", "#ff9a3d"];
+        var shapes = ["★", "✦", "●"];
+        var count = 18;
+
+        for (var i = 0; i < count; i++) {
+            var el = document.createElement("div");
+            el.className = "spark";
+            el.textContent = shapes[i % shapes.length];
+            el.style.left = origin.x + "px";
+            el.style.top = origin.y + "px";
+            el.style.color = colors[i % colors.length];
+            el.style.fontSize = (10 + Math.random() * 12) + "px";
+            document.body.appendChild(el);
+
+            var angle = (Math.PI * 2 * i) / count + Math.random() * 0.4;
+            var dist = 70 + Math.random() * 90;
+            var dx = Math.cos(angle) * dist;
+            var dy = Math.sin(angle) * dist - 30;
+            var rot = (Math.random() - 0.5) * 540;
+
+            var anim = el.animate(
+                [
+                    { opacity: 1, transform: "translate(-50%,-50%) translate(0,0) rotate(0deg) scale(.4)" },
+                    { opacity: 1, transform: "translate(-50%,-50%) translate(" + dx * 0.7 + "px," + dy * 0.7 + "px) rotate(" + rot * 0.6 + "deg) scale(1.1)", offset: 0.45 },
+                    { opacity: 0, transform: "translate(-50%,-50%) translate(" + dx + "px," + (dy + 60) + "px) rotate(" + rot + "deg) scale(.5)" }
+                ],
+                { duration: 700 + Math.random() * 250, easing: "cubic-bezier(.2,.7,.3,1)", delay: Math.random() * 60, fill: "forwards" }
+            );
+            anim.onfinish = (function (node) {
+                return function () { node.remove(); };
+            })(el);
+        }
+    }
+
+    function hideCard() {
+        return card.animate(
+            [
+                { opacity: 1, transform: "translateY(0) scale(1)", filter: "blur(0px)" },
+                { opacity: 0, transform: "translateY(22px) scale(.94)", filter: "blur(6px)" }
+            ],
+            { duration: 520, easing: "cubic-bezier(.5,0,.8,.4)", fill: "forwards" }
+        );
+    }
+
+    // layar menutup membulat di sekitar blok, seperti akhir level Mario
+    function irisClose(origin, duration) {
+        var iris = document.createElement("div");
+        iris.className = "iris";
+        iris.style.left = origin.x + "px";
+        iris.style.top = origin.y + "px";
+        document.body.appendChild(iris);
+
+        var start = Math.ceil(Math.hypot(window.innerWidth, window.innerHeight) * 2.1);
+
+        return iris.animate(
+            [
+                { width: start + "px", height: start + "px" },
+                { width: "0px", height: "0px" }
+            ],
+            { duration: duration, easing: "cubic-bezier(.65,0,.35,1)", fill: "forwards" }
+        );
+    }
+
+    /* =========================
+       URUTAN SAAT TOMBOL DITEKAN
+       ========================= */
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (running) return;
+        running = true;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Membuka website...";
+
+        if (reduceMotion) {
+            soundCoin(0);
+            setTimeout(function () { window.location.href = TARGET_PAGE; }, 450);
+            return;
+        }
+
+        var origin = center(qblock);
+
+        // 0 ms — tombol penyet, blok terpukul
+        squishButton();
+        bounceBlock();
+        soundBump();
+
+        // 90 ms — koin melompat keluar, percikan bintang
+        setTimeout(function () {
+            popCoin();
+            sparkleBurst(origin);
+        }, 90);
+        soundCoin(0.3);
+
+        // 520 ms — kartu memudar
+        setTimeout(hideCard, 520);
+
+        // 1000 ms — layar menutup, nada power-up naik
+        setTimeout(function () {
+            soundPowerUp(0);
+            irisClose(origin, 800);
+        }, 1000);
+
+        // 1830 ms — pindah halaman, bawa titik asal supaya layar membuka dari blok yang sama
+        setTimeout(function () {
+            var fx = (origin.x / window.innerWidth).toFixed(3);
+            var fy = (origin.y / window.innerHeight).toFixed(3);
+            window.location.href = TARGET_PAGE + "#enter-" + fx + "-" + fy;
+        }, 1830);
+    });
+
+    // kalau pengguna menekan "kembali", muat ulang supaya halaman tidak macet di layar hitam
+    window.addEventListener("pageshow", function (e) {
+        if (e.persisted) window.location.reload();
+    });
+})();
+</script>
+  <script src="training.js"></script>
+
+</body>
+</html>

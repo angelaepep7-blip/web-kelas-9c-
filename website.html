@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+<title>CLASS 9C — Super Mario</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#080d1c;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* ================= BACKGROUND ================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    background:
+        radial-gradient(circle at 10% 20%,rgba(255,70,70,.18),transparent 25%),
+        radial-gradient(circle at 90% 10%,rgba(40,130,255,.18),transparent 25%),
+        radial-gradient(circle at 50% 100%,rgba(255,210,50,.12),transparent 30%),
+        linear-gradient(135deg,#070b18,#101a35 50%,#080d1c);
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    opacity:.18;
+    background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:45px 45px;
+    pointer-events:none;
+}
+
+/* ================= FLOATING OBJECTS ================= */
+
+.floating{
+    position:fixed;
+    z-index:-1;
+    opacity:.15;
+    pointer-events:none;
+    animation:float 7s ease-in-out infinite;
+}
+
+.coin{
+    width:35px;
+    height:45px;
+    border:5px solid #ffd83d;
+    border-radius:50%;
+}
+
+.star{
+    font-size:55px;
+    color:#ffd83d;
+}
+
+.cloud{
+    font-size:65px;
+}
+
+.float1{top:15%;left:4%}
+.float2{top:45%;right:4%;animation-delay:1s}
+.float3{bottom:15%;left:8%;animation-delay:2s}
+.float4{top:65%;right:15%;animation-delay:3s}
+
+@keyframes float{
+    0%,100%{transform:translateY(0) rotate(0)}
+    50%{transform:translateY(-25px) rotate(8deg)}
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    position:fixed;
+    top:15px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(1100px,calc(100% - 25px));
+    z-index:1000;
+    padding:12px 18px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:22px;
+    background:rgba(10,15,32,.78);
+    backdrop-filter:blur(20px);
+    box-shadow:0 15px 50px rgba(0,0,0,.3);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Fredoka',sans-serif;
+    font-weight:700;
+    font-size:19px;
+}
+
+.logo-mushroom{
+    width:35px;
+    height:30px;
+    background:#ef3340;
+    border-radius:18px 18px 10px 10px;
+    position:relative;
+}
+
+.logo-mushroom::before{
+    content:"";
+    position:absolute;
+    width:9px;
+    height:9px;
+    background:white;
+    border-radius:50%;
+    left:7px;
+    top:6px;
+    box-shadow:13px 3px white;
+}
+
+.nav-links{
+    display:flex;
+    gap:7px;
+}
+
+.nav-links button{
+    border:0;
+    background:transparent;
+    color:#cbd5e1;
+    padding:9px 13px;
+    border-radius:12px;
+    cursor:pointer;
+    font-family:inherit;
+    transition:.25s;
+}
+
+.nav-links button:hover{
+    color:white;
+    background:rgba(255,255,255,.08);
+}
+
+@media(max-width:700px){
+    .nav-links{
+        display:none;
+    }
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:720px;
+    padding:150px 20px 90px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+}
+
+.hero-content{
+    max-width:900px;
+    animation:heroIn 1s ease;
+}
+
+@keyframes heroIn{
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 15px;
+    border-radius:50px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    color:#ffd84a;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:22px;
+}
+
+.hero h1{
+    font-family:'Fredoka',sans-serif;
+    font-size:clamp(55px,11vw,125px);
+    line-height:.9;
+    letter-spacing:-5px;
+    background:linear-gradient(180deg,#fff 15%,#ffd83d 48%,#ff5b4f 90%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color:transparent;
+    text-shadow:0 15px 50px rgba(255,70,70,.2);
+}
+
+.hero h2{
+    font-family:'Fredoka',sans-serif;
+    margin-top:20px;
+    font-size:clamp(20px,4vw,34px);
+    color:#dce7ff;
+}
+
+.hero p{
+    max-width:650px;
+    margin:18px auto 30px;
+    color:#9ca9c5;
+    line-height:1.8;
+}
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:0;
+    padding:13px 20px;
+    border-radius:15px;
+    color:white;
+    font-family:inherit;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn-primary{
+    background:linear-gradient(135deg,#ef3340,#ff7048);
+    box-shadow:0 10px 30px rgba(239,51,64,.3);
+}
+
+.btn-secondary{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.ground{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:70px;
+    background:
+        linear-gradient(#50b848 0 35%,#925c38 35% 100%);
+    border-top:8px solid #38a53b;
+}
+
+/* ================= SECTIONS ================= */
+
+section{
+    width:min(1100px,calc(100% - 30px));
+    margin:auto;
+    padding:80px 0;
+}
+
+.section-title{
+    margin-bottom:35px;
+}
+
+.section-title .small{
+    color:#ffd83d;
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+.section-title h2{
+    font-family:'Fredoka',sans-serif;
+    font-size:clamp(32px,5vw,48px);
+    margin-top:5px;
+}
+
+.section-title p{
+    color:#8491ad;
+    margin-top:8px;
+}
+
+/* ================= CLASS INFO ================= */
+
+.class-info{
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    gap:18px;
+}
+
+.info-card{
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.045);
+    border-radius:25px;
+    padding:25px;
+    backdrop-filter:blur(12px);
+}
+
+.teacher{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.teacher-photo{
+    width:85px;
+    height:85px;
+    border-radius:22px;
+    object-fit:cover;
+    background:#202b46;
+}
+
+.teacher h3{
+    font-family:'Fredoka',sans-serif;
+    font-size:25px;
+}
+
+.teacher p{
+    color:#8f9ab3;
+    font-size:14px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.stat{
+    padding:20px;
+    border-radius:18px;
+    background:rgba(255,255,255,.05);
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#ffd83d;
+}
+
+.stat span{
+    color:#8995ad;
+    font-size:12px;
+}
+
+/* ================= SEARCH ================= */
+
+.search-box{
+    position:relative;
+    margin-bottom:25px;
+}
+
+.search-box input{
+    width:100%;
+    padding:17px 20px 17px 48px;
+    border-radius:17px;
+    border:1px solid rgba(255,255,255,.1);
+    outline:none;
+    color:white;
+    background:rgba(255,255,255,.055);
+    font-family:inherit;
+    font-size:14px;
+}
+
+.search-box input:focus{
+    border-color:#ffd83d;
+    box-shadow:0 0 0 4px rgba(255,216,61,.08);
+}
+
+.search-icon{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#8995ad;
+}
+
+/* ================= STUDENTS ================= */
+
+.students-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    position:relative;
+}
+
+.couple-heart{
+    position:absolute;
+    width:34px;
+    height:34px;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+    z-index:6;
+    filter:drop-shadow(0 0 10px rgba(255,60,110,.65));
+    animation:coupleHeartBeat 1.15s ease-in-out infinite;
+    display:none;
+}
+
+.couple-heart svg{
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+.couple-heart path{
+    fill:#ff3b6e;
+}
+
+@keyframes coupleHeartBeat{
+    0%,100%{transform:translate(-50%,-50%) scale(1);}
+    15%{transform:translate(-50%,-50%) scale(1.28);}
+    30%{transform:translate(-50%,-50%) scale(0.95);}
+    45%{transform:translate(-50%,-50%) scale(1.18);}
+    60%,100%{transform:translate(-50%,-50%) scale(1);}
+}
+
+.student-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:23px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.045);
+    cursor:pointer;
+    transition:.35s;
+    animation:cardIn .6s both;
+}
+
+@keyframes cardIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.student-card:hover{
+    transform:translateY(-8px) scale(1.015);
+    border-color:rgba(255,216,61,.45);
+    box-shadow:0 20px 45px rgba(0,0,0,.3);
+}
+
+.student-photo{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    display:block;
+    background:#18233c;
+}
+
+.student-info{
+    padding:15px;
+}
+
+.number{
+    color:#ffd83d;
+    font-size:11px;
+    font-weight:700;
+}
+
+.student-info h3{
+    font-family:'Fredoka',sans-serif;
+    font-size:19px;
+    margin:3px 0;
+}
+
+.student-info p{
+    color:#8290aa;
+    font-size:12px;
+}
+
+.student-tags{
+    display:flex;
+    gap:5px;
+    margin-top:9px;
+    flex-wrap:wrap;
+}
+
+.tag{
+    font-size:10px;
+    color:#b8c4db;
+    padding:5px 8px;
+    border-radius:8px;
+    background:rgba(255,255,255,.06);
+}
+
+@media(max-width:900px){
+    .students-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .class-info{
+        grid-template-columns:1fr;
+    }
+
+    .students-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:11px;
+    }
+
+    .student-info{
+        padding:11px;
+    }
+}
+
+/* ================= PROFILE ================= */
+
+.profile-overlay{
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    background:rgba(3,6,15,.8);
+    backdrop-filter:blur(15px);
+}
+
+.profile-overlay.active{
+    display:flex;
+    animation:fadeIn .25s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+.profile-box{
+    width:min(800px,100%);
+    max-height:90vh;
+    overflow:auto;
+    border-radius:30px;
+    border:1px solid rgba(255,255,255,.12);
+    background:#10182d;
+    box-shadow:0 30px 100px rgba(0,0,0,.55);
+    animation:profileIn .35s ease;
+}
+
+@keyframes profileIn{
+    from{
+        opacity:0;
+        transform:scale(.94) translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+}
+
+.profile-cover{
+    height:180px;
+    position:relative;
+    background:
+        radial-gradient(circle at 20% 30%,#ef3340 0 25px,transparent 26px),
+        radial-gradient(circle at 80% 30%,#ffd83d 0 22px,transparent 23px),
+        linear-gradient(135deg,#173b70,#51216e);
+}
+
+.profile-close{
+    position:absolute;
+    right:15px;
+    top:15px;
+    width:40px;
+    height:40px;
+    border:0;
+    border-radius:50%;
+    background:rgba(0,0,0,.35);
+    color:white;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.profile-main{
+    padding:0 28px 30px;
+}
+
+.profile-avatar{
+    width:130px;
+    height:130px;
+    object-fit:cover;
+    border-radius:28px;
+    border:6px solid #10182d;
+    margin-top:-65px;
+    position:relative;
+    background:#18233c;
+}
+
+.profile-name{
+    margin-top:12px;
+    font-family:'Fredoka',sans-serif;
+    font-size:32px;
+}
+
+.profile-role{
+    color:#ffd83d;
+    font-size:13px;
+}
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-top:25px;
+}
+
+.profile-item{
+    padding:18px;
+    border-radius:18px;
+    background:rgba(255,255,255,.05);
+}
+
+.profile-item span{
+    display:block;
+    color:#8491aa;
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.profile-item strong{
+    font-size:14px;
+}
+
+.bio{
+    margin-top:12px;
+    padding:20px;
+    border-radius:18px;
+    background:rgba(255,255,255,.05);
+    color:#b9c4d8;
+    line-height:1.8;
+    font-size:14px;
+}
+
+@media(max-width:550px){
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+/* ================= TABLES ================= */
+
+.table-wrap{
+    overflow-x:auto;
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,.1);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+    background:rgba(255,255,255,.035);
+}
+
+th,td{
+    padding:15px;
+    text-align:left;
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+th{
+    color:#ffd83d;
+    font-size:12px;
+    text-transform:uppercase;
+}
+
+td{
+    color:#bdc8db;
+    font-size:13px;
+}
+
+tr:hover td{
+    background:rgba(255,255,255,.035);
+}
+
+/* ================= CLASS PHOTO ================= */
+
+.class-photo{
+    width:100%;
+    height:420px;
+    object-fit:cover;
+    border-radius:28px;
+    border:1px solid rgba(255,255,255,.1);
+    background:#18233c;
+}
+
+.photo-note{
+    margin-top:12px;
+    color:#71809c;
+    font-size:12px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    padding:70px 20px;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,.07);
+    background:rgba(0,0,0,.15);
+}
+
+.footer-logo{
+    font-family:'Fredoka',sans-serif;
+    font-size:28px;
+}
+
+footer p{
+    color:#71809c;
+    margin-top:8px;
+    font-size:12px;
+}
+
+/* ================= TO TOP ================= */
+
+.top-btn{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    width:45px;
+    height:45px;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:15px;
+    background:rgba(15,23,42,.85);
+    color:white;
+    cursor:pointer;
+    z-index:900;
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+}
+
+.top-btn.show{
+    opacity:1;
+    pointer-events:auto;
+}
+
+/* ================= MUSIC BUTTON ================= */
+
+.music-btn{
+    position:fixed;
+    left:18px;
+    bottom:18px;
+    width:45px;
+    height:45px;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:15px;
+    background:rgba(15,23,42,.85);
+    color:#ffd83d;
+    cursor:pointer;
+    z-index:900;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+    grid-column:1/-1;
+    padding:40px;
+    text-align:center;
+    color:#78859e;
+}
+
+/* ================= SCROLLBAR ================= */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#080d1c;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#283657;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#3b4c73;
+}
+
+  /* ================= REQUEST WEBSITE ================= */
+
+.request-section{
+    width:min(900px,calc(100% - 30px));
+    margin:30px auto 0;
+    padding:55px 20px;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.request-section h2{
+    font-family:'Fredoka',sans-serif;
+    font-size:clamp(28px,5vw,42px);
+    margin-bottom:10px;
+}
+
+.request-section p{
+    color:#9ca9c5;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+.request-buttons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+/* SEMUA TOMBOL */
+.request-btn{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+
+    min-width:145px;
+    padding:14px 22px;
+
+    border-radius:17px;
+    color:white;
+    text-decoration:none;
+
+    font-family:'Poppins',sans-serif;
+    font-size:14px;
+    font-weight:700;
+
+    overflow:hidden;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease,
+        filter .3s ease;
+}
+
+/* EFEK CAHAYA */
+.request-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:80%;
+    height:100%;
+
+    background:linear-gradient(
+        100deg,
+        transparent,
+        rgba(255,255,255,.3),
+        transparent
+    );
+
+    transform:skewX(-20deg);
+    transition:left .6s ease;
+}
+
+.request-btn:hover::before{
+    left:140%;
+}
+
+.request-btn span{
+    font-size:20px;
+    position:relative;
+    z-index:1;
+}
+
+.request-btn{
+    position:relative;
+    z-index:1;
+}
+
+.request-btn:hover{
+    transform:translateY(-5px) scale(1.03);
+    filter:brightness(1.12);
+}
+
+.request-btn:active{
+    transform:translateY(-1px) scale(.97);
+}
+
+
+/* WHATSAPP */
+.request-whatsapp{
+    background:linear-gradient(
+        135deg,
+        #25D366,
+        #128C7E
+    );
+
+    box-shadow:
+        0 10px 30px rgba(37,211,102,.25);
+}
+
+.request-whatsapp:hover{
+    box-shadow:
+        0 15px 40px rgba(37,211,102,.45);
+}
+
+
+/* INSTAGRAM */
+.request-instagram{
+    background:linear-gradient(
+        135deg,
+        #833AB4,
+        #E1306C,
+        #F77737
+    );
+
+    box-shadow:
+        0 10px 30px rgba(225,48,108,.25);
+}
+
+.request-instagram:hover{
+    box-shadow:
+        0 15px 40px rgba(225,48,108,.45);
+}
+
+
+/* GMAIL */
+.request-gmail{
+    background:linear-gradient(
+        120deg,
+        #EA4335,
+        #C5221F
+    );
+
+    box-shadow:
+        0 10px 30px rgba(234,67,53,.25);
+}
+
+.request-gmail:hover{
+    box-shadow:
+        0 7px 10px rgba(234,67,53,.45);
+}
+
+
+@media(max-width:500px){
+
+    .request-buttons{
+        flex-direction:column;
+    }
+
+    .request-btn{
+        width:min(280px,100%);
+    }
+
+}
+  .developer{
+    margin-top:12px;
+    color:#64748b;
+    font-size:8px;
+    letter-spacing:.7px;
+    opacity:.8;
+}
+
+.developer strong{
+    color:#94a3b8;
+    font-weight:600;
+}
+  /* Tombol lebih kecil */
+.request-btn{
+    min-width:80px;
+    padding:5px 5px;
+    border-radius:3px;
+    font-size:15px;
+    gap:6px;
+}
+
+.request-btn span{
+    font-size:15px;
+}
+
+/* Teks developer lebih kecil */
+.developer{
+    margin-top:4px;
+    font-size:4px;
+    letter-spacing:.1px;
+}
+.developer{
+    margin-top:22px;
+    text-align:center;
+    color:#71809c;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:.3px;
+}
+
+.developer strong{
+    color:#aebbd0;
+    font-weight:600;
+}
+  .instagram-logo{
+    width:70px;
+    height:60px;
+    display:inline-block;
+    text-decoration:none;
+    transition:transform .3s ease, filter .3s ease;
+}
+
+.instagram-logo svg{
+    width:80%;
+    height:80%;
+    display:block;
+}
+
+.instagram-logo:hover{
+    transform:scale(1.08);
+    filter:drop-shadow(0 8px 18px rgba(225,48,108,.45));
+}
+
+.instagram-logo:active{
+    transform:scale(.94);
+}
+
+  /* =========================================================
+   BAGIAN PALING BAWAH: Instagram + Gmail + tulisan developer
+   (sosial.css) — dipasang di index.html lewat:
+   <link rel="stylesheet" href="sosial.css">
+   ========================================================= */
+
+/* ---------- Wadah bagian bawah ---------- */
+.request-section{
+    width:min(900px,calc(100% - 30px));
+    margin:10px auto 0;
+    padding:40px 20px 34px;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.request-section p{
+    color:#9ca9c5;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+/* ---------- Baris logo (sejajar) ---------- */
+.request-buttons{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+    gap:22px;
+    flex-wrap:nowrap;
+}
+
+/* ---------- Logo Instagram ---------- */
+.instagram-logo{
+    width:56px;
+    height:56px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    transition:transform .3s ease, filter .3s ease;
+}
+
+.instagram-logo svg{
+    width:56px;
+    height:56px;
+    max-width:100%;
+    display:block;
+}
+
+.gmail-logo svg{
+    height:46px;
+}
+
+.instagram-logo:hover{
+    transform:scale(1.08);
+    filter:drop-shadow(0 8px 18px rgba(225,48,108,.45));
+}
+
+.instagram-logo:active{
+    transform:scale(.94);
+}
+
+/* ---------- Logo Gmail (pakai gaya dasar Instagram, cahaya merah) ---------- */
+.gmail-logo:hover{
+    filter:drop-shadow(0 8px 18px rgba(234,67,53,.45));
+}
+
+/* ---------- Tulisan developer ---------- */
+.developer{
+    display:block;
+    clear:both;
+    position:static;
+    margin-top:34px;
+    text-align:center;
+    color:#71809c;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:.3px;
+    opacity:.8;
+}
+
+.developer strong{
+    color:#aebbd0;
+    font-weight:600;
+}
+
+</style>
+</head>
+
+
+
+<!-- FLOATING MARIO STYLE OBJECTS -->
+<div class="floating star float1">★</div>
+<div class="floating cloud float2">☁</div>
+<div class="floating star float3">★</div>
+<div class="floating cloud float4">☁</div>
+<div class="floating cloud float5">🍄</div>
+<div class="floating cloud float6">🍄</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">
+        <div class="logo-mushroom"></div>
+        CLASS 9C
+    </div>
+
+    <div class="nav-links">
+        <button onclick="goTo('home')">Home</button>
+        <button onclick="goTo('students')">Murid</button>
+        <button onclick="goTo('gallery')">Foto Kelas</button>
+        <button onclick="goTo('schedule')">Jadwal</button>
+        <button onclick="goTo('piket')">Piket</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            🍄 WELCOME TO OUR CLASS
+        </div>
+
+        <h1>CLASS<br>9C</h1>
+
+        <h2>Level Up Together 🚀</h2>
+
+        <p>
+            Tempat menyimpan cerita, kenangan, tawa,
+            perjuangan dan perjalanan satu kelas.
+            Bukan cuma teman sekelas — kita satu team.
+        </p>
+
+        <div class="hero-buttons">
+            <button class="btn btn-primary" onclick="goTo('students')">
+                👨‍🎓 Lihat Murid
+            </button>
+
+            <button class="btn btn-secondary" onclick="goTo('gallery')">
+                📸 Foto Kelas
+            </button>
+        </div>
+
+    </div>
+
+    <div class="ground"></div>
+</header>
+
+<!-- CLASS INFO -->
+<section>
+
+    <div class="section-title">
+        <div class="small">OUR TEAM</div>
+        <h2>Siapa Kita?</h2>
+        <p>Satu kelas, banyak karakter, satu cerita.</p>
+    </div>
+
+    <div class="class-info">
+
+        <div class="info-card teacher">
+            <img
+                id="teacherphoto"
+                class="teacher-photo"
+                src="https://cdn.phototourl.com/member/2026-09-23-f81e9435-f50e-4c77-9fb5-57d196e54a01.jpg"
+                alt="Wali Kelas"
+            >
+
+            <div>
+                <div style="color:#ffd83d;font-size:11px;font-weight:700">
+                    WALI KELAS
+                </div>
+
+                <h3 id="teacherName">
+                    Kakek Agus Mulyadi
+                </h3>
+
+                <p>
+                    Pembimbing sekaligus bagian penting
+                    dari perjalanan kelas kami.
+                </p>
+            </div>
+        </div>
+
+        <div class="info-card stats">
+            <div class="stat">
+                <strong>35</strong>
+                <span>Murid</span>
+            </div>
+
+            <div class="stat">
+                <strong>1</strong>
+                <span>Wali Kelas</span>
+            </div>
+
+            <div class="stat">
+                <strong>9C</strong>
+                <span>Kelas</span>
+            </div>
+
+            <div class="stat">
+                <strong>∞</strong>
+                <span>Kenangan</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- STUDENTS -->
+<section id="students">
+
+    <div class="section-title">
+        <div class="small">MEET THE TEAM</div>
+        <h2>35 Murid</h2>
+        <p>Klik foto salah satu murid untuk membuka profilnya.</p>
+    </div>
+
+    <div class="search-box">
+        <span class="search-icon">🔍</span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Cari nama murid..."
+            oninput="searchStudents()"
+        >
+    </div>
+
+    <div class="students-grid" id="studentsGrid"></div>
+
+</section>
+
+<!-- CLASS PHOTO -->
+<section id="gallery">
+
+    <div class="section-title">
+        <div class="small">MEMORIES</div>
+        <h2>Foto Kelas</h2>
+        <p>Ganti foto ini dengan foto kelas kalian.</p>
+    </div>
+
+    <img
+        class="class-photo"
+        id="classPhoto"
+        src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400"
+        alt="Foto Kelas"
+    >
+
+    <div class="photo-note">
+        💡 my classrom is the best
+        
+    </div>
+
+</section>
+
+<!-- SCHEDULE -->
+
+    <div class="section-title">
+        <div class="small">DAILY MISSION</div>
+        <h2>Jadwal Pelajaran</h2>
+        <p>Jadwal dapat kamu ubah sesuai kelasmu.</p>
+    </div>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Hari</th>
+                    <th>Jam 1</th>
+                    <th>Jam 2</th>
+                    <th>Jam 3</th>
+                    <th>Jam 4</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Senin</td>
+                    <td>Ipa</td>
+                    <td>Matematika</td>
+                    <td>Bahasa Sunda</td>
+                    <td>Bahasa Inggris</td>
+                </tr>
+
+                <tr>
+                    <td>Selasa</td>
+                    <td>Ipa</td>
+                    <td>Bahasa Inggris</td>
+                    <td>Agama Islam PAI</td>
+                    <td>Pjok</td>
+                </tr>
+
+                <tr>
+                    <td>Rabu</td>
+                    <td>Matematika</td>
+                    <td>Ips</td>
+                    <td>Bahasa Indonesia</td>
+                   <td>_</td>
+                </tr>
+
+                <tr>
+                    <td>Kamis</td>
+                    <td>Informatika</td>
+                    <td>Ipa</td>
+                    <td>Ips</td>
+                    <td>Bahasa Indonesia</td>
+                </tr>
+
+             <tr>
+                    <td>Jumat</td>
+                    <td>PPkn</td>
+                    <td>Seni Budaya</td>
+                    <td>_</td>
+                    <td>_</td>
+                    <td>—</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- ================= REQUEST WEBSITE ================= -->
+
+<section class="request-section">
+
+ <div class="request-buttons" style="display:flex;flex-direction:row;justify-content:center;align-items:center;gap:22px;flex-wrap:nowrap">
+     <a class="instagram-logo" style="display:flex;align-items:center;justify-content:center;width:56px;height:56px"
+   href="https://www.instagram.com/_ixc.archive?stkn=NXp6MnNwdzZ0MXMx"
+   target="_blank"
+   rel="noopener"
+   aria-label="Instagram">
+
+    <svg viewBox="0 0 100 100" width="56" height="56" style="width:56px;height:56px;display:block" xmlns="http://www.w3.org/2000/svg">
+
+        <defs>
+            <linearGradient id="instagramGradient"
+                            x1="10%" y1="100%"
+                            x2="90%" y2="0%">
+                <stop offset="0%" stop-color="#FFD600"/>
+                <stop offset="28%" stop-color="#FF7A00"/>
+                <stop offset="55%" stop-color="#FF0069"/>
+                <stop offset="78%" stop-color="#D300C5"/>
+                <stop offset="100%" stop-color="#7638FA"/>
+            </linearGradient>
+        </defs>
+
+        <!-- Background gradient -->
+        <rect x="2" y="2"
+              width="96" height="96"
+              rx="28"
+              fill="url(#instagramGradient)"/>
+
+        <!-- Rounded square putih -->
+        <rect x="20" y="20"
+              width="60" height="60"
+              rx="18"
+              fill="none"
+              stroke="#fff"
+              stroke-width="8"/>
+
+        <!-- Lingkaran kamera putih -->
+        <circle cx="50" cy="50"
+                r="17"
+                fill="none"
+                stroke="#fff"
+                stroke-width="8"/>
+
+        <!-- Titik kanan atas -->
+        <circle cx="68" cy="32"
+                r="5"
+                fill="#fff"/>
+
+    </svg>
+     </a>
+        <a class="instagram-logo gmail-logo" style="display:flex;align-items:center;justify-content:center;width:56px;height:56px"
+   href="https://kirim-pesan-ke-developerrrr.netlify.app/"
+   target="_blank"
+   rel="noopener"
+   aria-label="Gmail">
+
+    <svg viewBox="2 6 44 36" width="56" height="46" style="width:56px;height:46px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#4caf50" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c1.657,0,3-1.343,3-3V16.2z"/>
+        <path fill="#1e88e5" d="M3,16.2l3.614,1.71L13,23.7V40H6c-1.657,0-3-1.343-3-3V16.2z"/>
+        <polygon fill="#e53935" points="35,11.2 24,19.45 13,11.2 12,17 13,23.7 24,31.95 35,23.7 36,17"/>
+        <path fill="#c62828" d="M3,12.298V16.2l10,7.5V11.2L9.876,8.859C9.132,8.301,8.228,8,7.298,8h0C4.924,8,3,9.924,3,12.298z"/>
+        <path fill="#fbc02d" d="M45,12.298V16.2l-10,7.5V11.2l3.124-2.341C38.868,8.301,39.772,8,40.702,8h0C43.076,8,45,9.924,45,12.298z"/>
+    </svg>
+</a>
+</div>
+
+
+    
+</section>
+
+ 
+             <div class="developer">
+               Create by <strong>Rivan</strong> • CLASS 9C
+        </div>
+
+
+<script src="musik.js"></script>
+<script src="sc2.js"></script>
+<script src="mario.js"></script>
+<script src="hati berdetak.js"></script>
+<script src="foto.js"></script>
+
+</body>
+</html>
+  
+  
