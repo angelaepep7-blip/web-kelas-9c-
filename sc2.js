@@ -267,7 +267,7 @@ students.push(
 
     {
         id: 22,
-        name: "Jepana",
+        name: "Zeva",
         hobby: "badminton",
         bio: "pacar nya azka",
         photo: "https://cdn.phototourl.com/member/2026-09-27-a599950b-bc61-44e8-9c54-685c1955f7de.jpg",
