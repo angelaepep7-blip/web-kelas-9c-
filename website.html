@@ -1459,7 +1459,41 @@ footer p{
              <div class="developer">
                Create by <strong>Rivan</strong> • CLASS 9C
         </div>
+        <!-- Paling bawah section request website Anda -->
+<div class="developer">
+   Create by <strong>Rivan</strong> • CLASS 9C
+</div>
 
+<!-- ================= LENIS JAVASCRIPT (Taro Di Sini) ================= -->
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    touchMultiplier: 2,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+
+  function goTo(id) {
+    const element = document.getElementById(id);
+    if (element) {
+      lenis.scrollTo(element, {
+        offset: -80,
+        duration: 1.5
+      });
+    }
+  }
+</script>
+
+
+         
 
 <script src="musik.js"></script>
 <script src="sc2.js"></script>
