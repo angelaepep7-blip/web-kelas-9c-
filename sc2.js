@@ -10,10 +10,10 @@ const students = [
         id: 1,
         name: "Rivan",
         hobby: "Coding dan gaming",
-        bio: "Gada hasil yg instan, semua butuh proses",
+        bio: "Pria sigma",
         photo: "https://cdn.phototourl.com/member/2026-09-23-599597d1-cd64-4c10-a27e-80ba58b8255a.jpg",
         music: {
-            name: "the night we met",
+            name: "lost soul",
             file: "vin3.mp3"
         }
     },
