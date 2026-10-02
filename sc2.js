@@ -118,7 +118,7 @@ const students = [
         id: 10,
         name: "Siti Samsiah",
         hobby: "volly dan menari",
-        bio: "Isi bio",
+        bio: "lo sibuk nyari perhatian, gue sibuk bangun masa depan",
         photo: "https://cdn.phototourl.com/member/2026-09-23-f9135862-8df9-43a7-ba3b-e51ca1acac9a.jpg",
         music: {
             name: "lesung pipi (Raim laode)",
