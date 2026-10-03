@@ -1535,3 +1535,102 @@ if (
     init();
 
 }
+
+/* ===== SCROLL REVEAL (seluruh website) ===== */
+(function(){
+
+    var reduce = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var hasIO = 'IntersectionObserver' in window;
+
+    var io = hasIO ? new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+            if(e.isIntersecting){
+                e.target.classList.add('show');
+                io.unobserve(e.target);
+            }
+        });
+    },{threshold:.12,rootMargin:'0px 0px -50px 0px'}) : null;
+
+    function watch(el, soft){
+        if(el.__revealed) return;
+        el.__revealed = true;
+
+        if(reduce || !hasIO){
+            return;
+        }
+
+        el.classList.add(soft ? 'reveal-soft' : 'reveal');
+
+        if(!soft){
+            /* setelah animasi selesai, lepas class supaya hover/efek asli elemen normal lagi */
+            el.addEventListener('transitionend', function done(ev){
+                if(ev.target !== el || ev.propertyName !== 'opacity') return;
+                el.classList.remove('reveal','show');
+                el.removeEventListener('transitionend', done);
+            });
+        }
+
+        io.observe(el);
+    }
+
+    /* elemen biasa: judul, kartu, tabel, foto, teks, tombol */
+    var targets = [
+        '.section-title',
+        '.info-card',
+        '.table-wrap',
+        '.class-photo',
+        '.photo-note',
+        '.request-section h2',
+        '.request-section p',
+        '.request-buttons'
+    ].join(',');
+
+    document.querySelectorAll(targets).forEach(function(el, idx){
+        if(el.classList.contains('info-card')){
+            var sibs = Array.prototype.indexOf.call(el.parentNode.children, el);
+            el.style.setProperty('--d', (sibs * 0.12) + 's');
+        }
+        /* elemen yang sudah punya class reveal dari HTML tetap dipakai */
+        if(el.classList.contains('reveal')){
+            el.__revealed = true;
+            if(reduce || !hasIO){ return; }
+            io.observe(el);
+            el.addEventListener('transitionend', function done(ev){
+                if(ev.target !== el || ev.propertyName !== 'opacity') return;
+                el.classList.remove('reveal','show');
+                el.removeEventListener('transitionend', done);
+            });
+            return;
+        }
+        watch(el, false);
+    });
+
+    /* kartu murid dibuat lewat JS, jadi dipantau saat ditambahkan */
+    var grid = document.getElementById('studentsGrid');
+
+    function handleCards(root){
+        var cards = root.querySelectorAll ? root.querySelectorAll('.student-card') : [];
+        if(root.classList && root.classList.contains('student-card')){
+            cards = [root];
+        }
+        Array.prototype.forEach.call(cards, function(card){
+            var pos = Array.prototype.indexOf.call(card.parentNode.children, card);
+            card.style.setProperty('--d', ((pos % 3) * 0.1) + 's');
+            watch(card, true);
+        });
+    }
+
+    if(grid){
+        handleCards(grid);
+        new MutationObserver(function(muts){
+            muts.forEach(function(m){
+                m.addedNodes.forEach(function(n){
+                    if(n.nodeType === 1){ handleCards(n); }
+                });
+            });
+        }).observe(grid,{childList:true});
+    }
+
+})();
