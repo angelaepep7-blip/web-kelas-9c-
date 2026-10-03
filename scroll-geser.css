@@ -1,0 +1,58 @@
+/* =========================================================
+   SCROLL GESER — elemen bergeser masuk super smooth saat di-scroll
+   Dipakai bersama scroll-geser.js (dipasang di website.html lewat <link>)
+   ========================================================= */
+
+:root{
+    --slide-ease:cubic-bezier(.16,1,.3,1);
+}
+
+/* keadaan awal: tersembunyi & geser dari samping (nilai diatur oleh JS) */
+.sl{
+    opacity:0;
+    transform:translate3d(var(--sx,-80px),var(--sy,0px),0) scale(var(--ss,.95));
+    animation:none;
+    transition:
+        opacity 1.3s var(--slide-ease),
+        transform 1.3s var(--slide-ease);
+    transition-delay:var(--d,0s);
+    will-change:opacity,transform;
+}
+
+/* saat masuk layar */
+.sl.show{
+    opacity:1;
+    transform:translate3d(0,0,0) scale(1);
+}
+
+/* kartu murid: setelah geser selesai, jangan putar animasi cardIn lagi */
+.student-card.sl-done{
+    animation:none;
+}
+
+/* hati pasangan muncul halus saat sampai di layar */
+.couple-heart,
+.love-heart{
+    transition:opacity 1.2s ease .3s;
+}
+
+.couple-heart.pending,
+.love-heart.pending{
+    opacity:0;
+}
+
+/* HP/browser dengan "reduce motion": matikan animasi */
+@media(prefers-reduced-motion:reduce){
+    .sl{
+        opacity:1;
+        transform:none;
+        transition:none;
+    }
+    .couple-heart,
+    .couple-heart.pending,
+    .love-heart,
+    .love-heart.pending{
+        opacity:1;
+        transition:none;
+    }
+}
