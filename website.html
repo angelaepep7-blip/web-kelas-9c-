@@ -714,13 +714,28 @@ tr:hover td{
 
 /* ================= CLASS PHOTO ================= */
 
+.class-photos{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+}
+
 .class-photo{
     width:100%;
-    height:420px;
+    height:300px;
     object-fit:cover;
     border-radius:28px;
     border:1px solid rgba(255,255,255,.1);
     background:#18233c;
+}
+
+@media(max-width:600px){
+    .class-photos{
+        grid-template-columns:1fr;
+    }
+    .class-photo{
+        height:240px;
+    }
 }
 
 .photo-note{
@@ -1137,6 +1152,56 @@ footer p{
     color:#aebbd0;
     font-weight:600;
 }
+
+/* ===== SCROLL REVEAL ===== */
+
+.reveal{
+    opacity:0;
+    transform:translateY(50px);
+    filter:blur(8px);
+    transition:
+        opacity 1.1s cubic-bezier(.16,1,.3,1),
+        transform 1.1s cubic-bezier(.16,1,.3,1),
+        filter 1.1s cubic-bezier(.16,1,.3,1);
+    transition-delay:var(--d,0s);
+    will-change:opacity,transform,filter;
+}
+
+.reveal.show{
+    opacity:1;
+    transform:none;
+    filter:blur(0);
+}
+
+/* khusus kartu murid: tanpa transform supaya posisi hati & hover aman */
+.student-card.reveal-soft{
+    opacity:0;
+    filter:blur(10px);
+    animation:none;
+    transition:
+        opacity 1.1s cubic-bezier(.16,1,.3,1),
+        filter 1.1s cubic-bezier(.16,1,.3,1),
+        transform .35s,
+        border-color .35s,
+        box-shadow .35s;
+    transition-delay:var(--d,0s),var(--d,0s),0s,0s,0s;
+}
+
+.student-card.reveal-soft.show{
+    opacity:1;
+    filter:blur(0);
+}
+
+@media(prefers-reduced-motion:reduce){
+    .reveal,
+    .student-card.reveal-soft{
+        opacity:1;
+        transform:none;
+        filter:none;
+        transition:none;
+    }
+}
+    
 
 </style>
 </head>
